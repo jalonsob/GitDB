@@ -67,23 +67,27 @@ $(document).ready(function() {
           error: function () {
             plataform="github"
             
-            var github = new Github({
-              token: "e2cd531cc328875f79e7570fd4734fe8233bb672",
-              auth: "oauth"
-            });
-            var user = github.getUser();
-            user.userRepos("jalonsob", function(err, repos) {
-              console.log(err,repos)
-            });
-            myrepo = github.getRepo("jalonsob", "Ejemplo");
-            myrepo.write('master', 'datafile', 
-             new Date().toLocaleString(),
-             "Updating data", function(err) {
-                 console.log (err)
+            hello.init({
+              github : "936bbeb53192a030958d"
+              },{
+                redirect_uri : 'redirect.html',
+                oauth_proxy : "https://auth-server.herokuapp.com/proxy",
+                scope : "publish_files",
               });
-            myrepo.read('master', 'datafile', function(err, data) {
-              console.log (err, data);
-            });
+              access = hello("github");
+              access.login({response_type: 'code'}).then( function(){
+                auth = hello("github").getAuthResponse();
+                token = auth.access_token;
+                console.log (token);
+                github = new Github({
+                    token: token,
+                    auth: "oauth"
+                });
+                $("#repoform").html(repoHTML);
+                $("#repobutton").click(getRepo);
+              }, function( e ){
+                alert('Signin error: ' + e.error.message);
+              });
           }
         });
       //Zone of loading of a json configuration of a determinate personalized dashboard
