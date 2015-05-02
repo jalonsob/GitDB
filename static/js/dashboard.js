@@ -66,7 +66,7 @@ $(document).ready(function() {
           },
           error: function () {
             plataform="github"
-            
+            var github;
             hello.init({
               github : "936bbeb53192a030958d"
               },{
