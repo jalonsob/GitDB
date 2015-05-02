@@ -85,73 +85,72 @@ $(document).ready(function() {
                   auth: "oauth"
               });
               myrepo = github.getRepo("jalonsob", "DB");
-              myrepo.write('master', "prueba2", "hola",
+              myrepo.write('master', "prueba", "hola",
                "Updating data", function(err) {
                    console.log ("escrito");
               });
 
-              myrepo.read('master', "prueba2", function(err, data) {
+              myrepo.read('master', "prueba", function(err, data) {
                 console.log("pone: "+data)
               });
 
-              $("#repoform").html(repoHTML);
-              $("#repobutton").click(getRepo);
+              console.log(document.URL)
             }, function( e ){
               alert('Signin error: ' + e.error.message);
             });
           }
-        });
-      //Zone of loading of a json configuration of a determinate personalized dashboard
-      if((document.URL.split("/")[document.URL.split("/").length-1]!='') && !isNaN(parseInt(document.URL.split("/")[document.URL.split("/").length-1]))){
+        }); 
+      if((plataform=="django") && (document.URL.split("/")[document.URL.split("/").length-1]!='') && !isNaN(parseInt(document.URL.split("/")[document.URL.split("/").length-1]))){
+        //Zone of loading of a json configuration of a determinate personalized dashboard
+        var N= document.URL.split("/")[document.URL.split("/").length-1]
 
-          var N= document.URL.split("/")[document.URL.split("/").length-1]
-
-          //We make a request to our server for the personalized json
-          $.ajax({
-            type: "GET",
-            url: "/db/"+N,
-            data: N.toString(),
-            dataType: "json",
-            success: function(data){
-              $("#titleApp").val(data.name.toString())
-              Object.keys(data.panels).forEach(function(element){
-                PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name,data.panels[element].panel.reading);
-                
-                var id=data.panels[element].panel.id
-                dashConfiguration.push(id)
-                var panel= GetPanel(id)
-                //With the panel created we pass to create the object of the widgets to draw them when we want to see each panel.
-                data.panels[element].widgets.forEach(function(widgetSaved){
-                  if(numWidget<widgetSaved.id){
-                    numWidget=widgetSaved.id
-                  }
-                  if(widgetSaved.type=="HighInfo"){
-                    var widget= new HighInfo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                    panel.pushElement(widget)
-                  }else if(widgetSaved.type=="HighDemo"){
-                    var widget= new HighDemo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                    panel.pushElement(widget)
-                  }else if(widgetSaved.type=="HighTime"){
-                    var widget= new HighTime(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.from,widgetSaved.to,widgetSaved.size,widgetSaved.x,widgetSaved.y)
-                    panel.pushElement(widget)
-                  }else if(widgetSaved.type=="VideoWidget"){
-                    var widget= new VideoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.url,widgetSaved.content,widgetSaved.width,widgetSaved.height,widgetSaved.x,widgetSaved.y)
-                    panel.pushElement(widget)
-                  }else if(widgetSaved.type=="HtmlInfoWidget"){
-                    var widget= new HtmlInfoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                    panel.pushElement(widget)
-                  }
-                })
+        //We make a request to our server for the personalized json
+        $.ajax({
+          type: "GET",
+          url: "/db/"+N,
+          data: N.toString(),
+          dataType: "json",
+          success: function(data){
+            $("#titleApp").val(data.name.toString())
+            Object.keys(data.panels).forEach(function(element){
+              PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name,data.panels[element].panel.reading);
+              
+              var id=data.panels[element].panel.id
+              dashConfiguration.push(id)
+              var panel= GetPanel(id)
+              //With the panel created we pass to create the object of the widgets to draw them when we want to see each panel.
+              data.panels[element].widgets.forEach(function(widgetSaved){
+                if(numWidget<widgetSaved.id){
+                  numWidget=widgetSaved.id
+                }
+                if(widgetSaved.type=="HighInfo"){
+                  var widget= new HighInfo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                  panel.pushElement(widget)
+                }else if(widgetSaved.type=="HighDemo"){
+                  var widget= new HighDemo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                  panel.pushElement(widget)
+                }else if(widgetSaved.type=="HighTime"){
+                  var widget= new HighTime(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.from,widgetSaved.to,widgetSaved.size,widgetSaved.x,widgetSaved.y)
+                  panel.pushElement(widget)
+                }else if(widgetSaved.type=="VideoWidget"){
+                  var widget= new VideoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.url,widgetSaved.content,widgetSaved.width,widgetSaved.height,widgetSaved.x,widgetSaved.y)
+                  panel.pushElement(widget)
+                }else if(widgetSaved.type=="HtmlInfoWidget"){
+                  var widget= new HtmlInfoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                  panel.pushElement(widget)
+                }
               })
-              actualPanel=1;
-              var panel= GetPanel(1)
-              console.log(panel.reading)
-              actualReadingData=panel.reading
-              $("#panel"+1).slideDown("slow");
-              //makepanel is a function that creates a panel with the configuration saved
-              makePanel(1)
-            }
-          });
+            })
+            actualPanel=1;
+            var panel= GetPanel(1)
+            console.log(panel.reading)
+            actualReadingData=panel.reading
+            $("#panel"+1).slideDown("slow");
+            //makepanel is a function that creates a panel with the configuration saved
+            makePanel(1)
+          }
+        });
+    
       }else{
         //In other case we request the default configuration file
         $.getJSON("templates/json/0.json").success(function(data){
