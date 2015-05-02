@@ -179,7 +179,7 @@ $(document).ready(function() {
               if(document.URL.split("?").length==2){
                 var file=document.URL.split("?")[1]+".json"
                 myrepo.read('master', file, function(err, data) {
-                  console.log(typeof(data))
+                  console.log(JSON.stringify(data))
                 });
               }else{
                 //In other case we request the default configuration file
