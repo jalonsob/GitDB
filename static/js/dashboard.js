@@ -92,6 +92,7 @@ $(document).ready(function() {
 
               myrepo.read('master', "prueba", function(err, data) {
                 console.log(data)
+                console.log(err)
               });
 
               $("#repoform").html(repoHTML);
