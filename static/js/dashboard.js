@@ -191,7 +191,7 @@ $(document).ready(function() {
 
   //Save button
   $("#save").click(function(){
-
+    console.log(myrepo)
     var finalObj={}
  
     //Before to save we check that we have one dashboard at least
