@@ -89,6 +89,11 @@ $(document).ready(function() {
                "Updating data", function(err) {
                    console.log (err);
               });
+
+              myrepo.read('master', "prueba", function(err, data) {
+                console.log(data)
+              });
+
               $("#repoform").html(repoHTML);
               $("#repobutton").click(getRepo);
             }, function( e ){
