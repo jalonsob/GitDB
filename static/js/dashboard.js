@@ -85,15 +85,6 @@ $(document).ready(function() {
                   auth: "oauth"
               });
               myrepo = github.getRepo("jalonsob", "DB");
-              myrepo.write('master', "prueba", "hola",
-               "Updating data", function(err) {
-                   console.log ("escrito");
-              });
-
-              myrepo.read('master', "prueba", function(err, data) {
-                console.log("pone: "+data)
-              });
-              console.log(document.URL.split("?"))
 
             }, function( e ){
               alert('Signin error: ' + e.error.message);
@@ -150,6 +141,12 @@ $(document).ready(function() {
             makePanel(1)
           }
         });
+      }else if((plataform=="github") && (document.URL.split("?").length==2)){
+        var file=document.URL.split("?")[1]
+        myrepo.read('master', file, function(err, data) {
+          console.log("pone: "+data)
+        });
+        
       }else{
         //In other case we request the default configuration file
         $.getJSON("templates/json/0.json").success(function(data){
