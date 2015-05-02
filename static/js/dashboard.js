@@ -85,14 +85,13 @@ $(document).ready(function() {
                   auth: "oauth"
               });
               myrepo = github.getRepo("jalonsob", "DB");
-              myrepo.write('master', "prueba", "hola",
+              myrepo.write('master', "prueba2", "hola",
                "Updating data", function(err) {
-                   console.log (err);
+                   console.log ("escrito");
               });
 
-              myrepo.read('master', "prueba", function(err, data) {
-                console.log(data)
-                console.log(err)
+              myrepo.read('master', "prueba2", function(err, data) {
+                console.log("pone: "+data)
               });
 
               $("#repoform").html(repoHTML);
