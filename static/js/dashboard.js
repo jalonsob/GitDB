@@ -93,8 +93,8 @@ $(document).ready(function() {
               myrepo.read('master', "prueba", function(err, data) {
                 console.log("pone: "+data)
               });
+              console.log(document.URL.split("?"))
 
-              console.log(document.URL)
             }, function( e ){
               alert('Signin error: ' + e.error.message);
             });
@@ -150,7 +150,6 @@ $(document).ready(function() {
             makePanel(1)
           }
         });
-    
       }else{
         //In other case we request the default configuration file
         $.getJSON("templates/json/0.json").success(function(data){
