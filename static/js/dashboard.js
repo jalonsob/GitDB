@@ -70,7 +70,7 @@ $(document).ready(function() {
             hello.init({
               github : "936bbeb53192a030958d"
               },{
-                redirect_uri : '',
+                redirect_uri : 'blob/master/redirect.html',
                 oauth_proxy : "https://auth-server.herokuapp.com/proxy",
                 scope : "publish_files",
               });
