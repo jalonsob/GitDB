@@ -38,6 +38,9 @@ var actualReadingData={
 var companies={};
 //Used platform
 var plataform="";
+//github variable to save at a repository
+var github={};
+var myrepo;
 
 $(document).ready(function() {
     //Request of configuration keys
@@ -66,7 +69,7 @@ $(document).ready(function() {
           },
           error: function () {
             plataform="github"
-            var github;
+
             hello.init({
               github : "936bbeb53192a030958d"
               },{
@@ -78,17 +81,15 @@ $(document).ready(function() {
               access.login({response_type: 'code'}).then( function(){
                 auth = hello("github").getAuthResponse();
                 token = auth.access_token;
-                console.log (token);
                 github = new Github({
                     token: token,
                     auth: "oauth"
                 });
-                $("#repoform").html(repoHTML);
-                $("#repobutton").click(getRepo);
               }, function( e ){
                 alert('Signin error: ' + e.error.message);
               });
-          }
+              console.log(github)
+            }
         });
       //Zone of loading of a json configuration of a determinate personalized dashboard
       if((document.URL.split("/")[document.URL.split("/").length-1]!='') && !isNaN(parseInt(document.URL.split("/")[document.URL.split("/").length-1]))){
