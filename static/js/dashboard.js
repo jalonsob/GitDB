@@ -90,6 +90,7 @@ $(document).ready(function() {
               alert('Signin error: ' + e.error.message);
             });
             alert(document.URL.split("?").length)
+            apert(plataform)
           }
         }); 
       if((plataform=="django") && (document.URL.split("/")[document.URL.split("/").length-1]!='') && !isNaN(parseInt(document.URL.split("/")[document.URL.split("/").length-1]))){
