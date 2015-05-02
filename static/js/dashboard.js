@@ -85,6 +85,7 @@ $(document).ready(function() {
                     token: token,
                     auth: "oauth"
                 });
+                console.log(github)
               }, function( e ){
                 alert('Signin error: ' + e.error.message);
               });
