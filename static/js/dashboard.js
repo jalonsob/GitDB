@@ -179,7 +179,7 @@ $(document).ready(function() {
               if(document.URL.split("?").length==2){
                 var file=document.URL.split("?")[1]+".json"
                 myrepo.read('master', file, function(err, data) {
-                  data= JSON.parse(data));
+                  data= JSON.parse(data);
                   Object.keys(data.panels).forEach(function(element){
                     PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
                     var id=element.split("panel")[1]
