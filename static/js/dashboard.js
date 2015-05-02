@@ -84,13 +84,12 @@ $(document).ready(function() {
                   token: token,
                   auth: "oauth"
               });
+              myrepo = github.getRepo("jalonsob", "DB");
               $("#repoform").html(repoHTML);
               $("#repobutton").click(getRepo);
             }, function( e ){
               alert('Signin error: ' + e.error.message);
             });
-            myrepo = github.getRepo("jalonsob", "DB");
-            myrepo.show(showRepo);
           }
         });
       //Zone of loading of a json configuration of a determinate personalized dashboard
