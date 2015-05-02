@@ -85,6 +85,10 @@ $(document).ready(function() {
                   auth: "oauth"
               });
               myrepo = github.getRepo("jalonsob", "DB");
+              myrepo.write('master', "prueba", "hola",
+               "Updating data", function(err) {
+                   console.log (err);
+              });
               $("#repoform").html(repoHTML);
               $("#repobutton").click(getRepo);
             }, function( e ){
@@ -191,7 +195,6 @@ $(document).ready(function() {
 
   //Save button
   $("#save").click(function(){
-    console.log(myrepo)
     var finalObj={}
  
     //Before to save we check that we have one dashboard at least
