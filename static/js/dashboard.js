@@ -69,25 +69,28 @@ $(document).ready(function() {
 
             hello.init({
               github : "936bbeb53192a030958d"
-              },{
-                redirect_uri : 'redirect.html',
-                oauth_proxy : "https://auth-server.herokuapp.com/proxy",
-                scope : "publish_files",
+            },{
+              redirect_uri : 'redirect.html',
+              oauth_proxy : "https://auth-server.herokuapp.com/proxy",
+              scope : "publish_files",
+            });
+
+            access = hello("github");
+            access.login({response_type: 'code'}).then( function(){
+              auth = hello("github").getAuthResponse();
+              token = auth.access_token;
+              console.log (token);
+              github = new Github({
+                  token: token,
+                  auth: "oauth"
               });
-              access = hello("github");
-              access.login({response_type: 'code'}).then( function(){
-                auth = hello("github").getAuthResponse();
-                token = auth.access_token;
-                console.log (token);
-                github = new Github({
-                    token: token,
-                    auth: "oauth"
-                });
-                $("#repoform").html(repoHTML);
-                $("#repobutton").click(getRepo);
-              }, function( e ){
-                alert('Signin error: ' + e.error.message);
-              });
+              $("#repoform").html(repoHTML);
+              $("#repobutton").click(getRepo);
+            }, function( e ){
+              alert('Signin error: ' + e.error.message);
+            });
+            myrepo = github.getRepo("jalonsob", "DB");
+            myrepo.show(showRepo);
           }
         });
       //Zone of loading of a json configuration of a determinate personalized dashboard
