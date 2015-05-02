@@ -85,11 +85,9 @@ $(document).ready(function() {
                     token: token,
                     auth: "oauth"
                 });
-                console.log(github)
               }, function( e ){
                 alert('Signin error: ' + e.error.message);
               });
-              console.log(github)
             }
         });
       //Zone of loading of a json configuration of a determinate personalized dashboard
