@@ -142,7 +142,8 @@ $(document).ready(function() {
           }
         });
       }else if((plataform=="github") && (document.URL.split("?").length==2)){
-        var file=document.URL.split("?")[1]
+        alert("asdf")
+        var file=document.URL.split("?")[1]+".json"
         myrepo.read('master', file, function(err, data) {
           console.log("pone: "+data)
         });
