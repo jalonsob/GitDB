@@ -343,8 +343,17 @@ $(document).ready(function() {
         panels.forEach(function(element){
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
         })
-        myrepo.contents('master', '', function(err,data){
-          console.log(data)
+        myrepo.contents('master', '', function(err,list){
+          if(list.length!=1000000000000000){
+            var ids=[]
+            list.forEach(function(element){
+              ids.push(parseInt(element.name.split(".json")[0]))
+            })
+            console.log(ids)
+          }else{
+            alert("Sorry, the server is full.")
+          }
+          
         });
       }
     }
