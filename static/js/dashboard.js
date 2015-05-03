@@ -358,13 +358,13 @@ $(document).ready(function() {
             }else{
               alert("Sorry, the server is full.")
             }
-            myrepo.write('master', id+".json", info,
+            myrepo.write('master', id+".json", JSON.stringify(info),
               "Updating data", function(err) {
               if(err!=null){
                 alert("Error: "+err);
               }else{
                 alert("Saved, dont forget the url: "+id)
-                window.history.replaceState("object or string", "Title", id);
+                window.history.replaceState("object or string", "Title", "?"+id);
 
               }
             });
@@ -372,7 +372,7 @@ $(document).ready(function() {
           });
         }else{
           var id=document.URL.split("?")[1]
-          myrepo.write('master', id+".json", info,
+          myrepo.write('master', id+".json", JSON.stringify(info),
               "Updating data", function(err) {
               if(err!=null){
                 alert("Error: "+err);
