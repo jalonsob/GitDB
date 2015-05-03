@@ -343,18 +343,45 @@ $(document).ready(function() {
         panels.forEach(function(element){
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
         })
-        myrepo.contents('master', '', function(err,list){
-          if(list.length!=1000000000000000){
-            var ids=[]
-            list.forEach(function(element){
-              ids.push(parseInt(element.name.split(".json")[0]))
-            })
-            console.log(ids)
-          }else{
-            alert("Sorry, the server is full.")
-          }
-          
-        });
+        if(document.URL.split("?").length!=2){
+          myrepo.contents('master', '', function(err,list){
+            if(list.length!=1000000000000000){
+              var ids=[]
+              list.forEach(function(element){
+                ids.push(parseInt(element.name.split(".json")[0]))
+              })
+              var id= Math.floor((Math.random() * 1000000000000000) + 1)
+                  
+              while((ids.indexOf(id)!=-1) && id!=0000000000000000){
+                id= Math.floor((Math.random() * 1000000000000000) + 1)
+              }
+            }else{
+              alert("Sorry, the server is full.")
+            }
+            myrepo.write('master', id+".json", info,
+              "Updating data", function(err) {
+              if(err!=null){
+                alert("Error: "+err);
+              }else{
+                alert("Saved, dont forget the url: "+id)
+                window.history.replaceState("object or string", "Title", id);
+
+              }
+            });
+            
+          });
+        }else{
+          var id=document.URL.split("?")[1]
+          myrepo.write('master', id+".json", info,
+              "Updating data", function(err) {
+              if(err!=null){
+                alert("Error: "+err);
+              }else{
+                alert("Saved")
+
+              }
+          });
+        }
       }
     }
   })
