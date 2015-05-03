@@ -258,7 +258,6 @@ $(document).ready(function() {
             }, function( e ){
               alert('Signin error: ' + e.error.message);
             });
-            alert(document.URL.split("?").length)
           }
         }); 
       
@@ -272,70 +271,83 @@ $(document).ready(function() {
   $("#save").click(function(){
     var finalObj={}
  
-    //Before to save we check that we have one dashboard at least
-    if(numPanel>0){
+    if(plataform=="django"){
+      //Before to save we check that we have one dashboard at least
+      if(numPanel>0){
+          var info={};
+          info.panels={}
+          info.name=$("#titleApp").val()
+          panels.forEach(function(element){
+            info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
+          })
+        
+        //To save we have to see if we are working in a created environment or we are creating a new dashboard.
+        if(document.URL.split("/")[document.URL.split("/").length-1]==""){
+          $.ajax({
+            type: "GET",
+            url: "/db/",
+            success: function(data){
+
+              var idList= data.split(",")
+              if(idList.length==1000000000000000){
+                alert("Sorry, the server is full.")
+              }else{
+
+                var id= Math.floor((Math.random() * 1000000000000000) + 1)
+                
+                while((idList.indexOf(id)!=-1) && id!=0000000000000000){
+                  id= Math.floor((Math.random() * 1000000000000000) + 1)
+                }
+
+                var send={
+                  N: id,
+                  C: info
+                }
+
+                //With the post we create the dashboard in the server.
+                $.ajax({
+                  type: "POST",
+                  url: "/db/",
+                  data: JSON.stringify(send),
+                  success: function(data){
+                    alert(data+"\n\n URL:   "+document.URL)
+                  }
+                });
+
+                window.history.replaceState("object or string", "Title", id);
+              }
+            }
+          });
+
+        }else{
+          //In other case we overwrite the existing configuration file in the server
+          var send={
+            N: document.URL.split("/")[document.URL.split("/").length-1],
+            C: info
+          }
+          $.ajax({
+            type: "PUT",
+            url: "/db/"+document.URL.split("/")[document.URL.split("/").length-1].toString(),
+            data: JSON.stringify(send),
+            success: function(data){
+              alert(data)
+            }
+          });
+        }
+      }
+    }else{
+      if(numPanel>0){
         var info={};
         info.panels={}
         info.name=$("#titleApp").val()
         panels.forEach(function(element){
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
         })
-      
-      //To save we have to see if we are working in a created environment or we are creating a new dashboard.
-      if(document.URL.split("/")[document.URL.split("/").length-1]==""){
-        $.ajax({
-          type: "GET",
-          url: "/db/",
-          success: function(data){
-
-            var idList= data.split(",")
-            if(idList.length==1000000000000000){
-              alert("Sorry, the server is full.")
-            }else{
-
-              var id= Math.floor((Math.random() * 1000000000000000) + 1)
-              
-              while((idList.indexOf(id)!=-1) && id!=0000000000000000){
-                id= Math.floor((Math.random() * 1000000000000000) + 1)
-              }
-
-              var send={
-                N: id,
-                C: info
-              }
-
-              //With the post we create the dashboard in the server.
-              $.ajax({
-                type: "POST",
-                url: "/db/",
-                data: JSON.stringify(send),
-                success: function(data){
-                  alert(data+"\n\n URL:   "+document.URL)
-                }
-              });
-
-              window.history.replaceState("object or string", "Title", id);
-            }
-          }
-        });
-
-      }else{
-        //In other case we overwrite the existing configuration file in the server
-        var send={
-          N: document.URL.split("/")[document.URL.split("/").length-1],
-          C: info
-        }
-        $.ajax({
-          type: "PUT",
-          url: "/db/"+document.URL.split("/")[document.URL.split("/").length-1].toString(),
-          data: JSON.stringify(send),
-          success: function(data){
-            alert(data)
-          }
+        myrepo.contents('master', '', function(err,data){
+          console.log(data)
         });
       }
     }
-
   })
 
   $("#addPanel").click(function(){
