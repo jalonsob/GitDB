@@ -363,7 +363,7 @@ $(document).ready(function() {
               if(err!=null){
                 alert("Error: "+err);
               }else{
-                alert("Saved, dont forget the url: "+id)
+                alert("Saved, dont forget the url: "+document.URL+id)
                 window.history.replaceState("object or string", "Title", "?"+id);
 
               }
