@@ -172,7 +172,7 @@ $(document).ready(function() {
             });
 
             hello( "github" ).api( '/me' ).then( function(r){
-                console.log(r)
+                console.log(r.login)
             });
 
             access = hello("github");
