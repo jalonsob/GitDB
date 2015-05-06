@@ -350,7 +350,8 @@ $(document).ready(function() {
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
         })
         if(document.URL.split("?").length!=2){
-          $("#panelSave").show()
+          alert("aqui")
+          $("#panelSave").slideDown("slow")
           var user = github.getUser();
           user.repos(function(err, repos) {
             $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
