@@ -171,10 +171,10 @@ $(document).ready(function() {
             });
 
             access = hello("github");
+            console.log(access)
             access.login({response_type: 'code'}).then( function(){
               auth = hello("github").getAuthResponse();
               token = auth.access_token;
-              console.log (hello("github").api("/me"));
               console.log(auth)
               github = new Github({
                   token: token,
