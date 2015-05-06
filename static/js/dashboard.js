@@ -182,8 +182,6 @@ $(document).ready(function() {
                   token: token,
                   auth: "oauth"
               });
-              var user = github.getUser();
-              console.log(user)
               if(document.URL.split("?").length==2){
                 var file=document.URL.split("?")[1]+".json"
                 myrepo.read('master', file, function(err, data) {
@@ -352,31 +350,10 @@ $(document).ready(function() {
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
         })
         if(document.URL.split("?").length!=2){
-          myrepo.contents('master', '', function(err,list){
-            if(list.length!=1000000000000000){
-              var ids=[]
-              list.forEach(function(element){
-                ids.push(parseInt(element.name.split(".json")[0]))
-              })
-              var id= Math.floor((Math.random() * 1000000000000000) + 1)
-                  
-              while((ids.indexOf(id)!=-1) && id!=0000000000000000){
-                id= Math.floor((Math.random() * 1000000000000000) + 1)
-              }
-            }else{
-              alert("Sorry, the server is full.")
-            }
-            myrepo.write('master', id+".json", JSON.stringify(info),
-              "Updating data", function(err) {
-              if(err!=null){
-                alert("Error: "+err);
-              }else{
-                alert("Saved, dont forget the url: "+document.URL+id)
-                window.history.replaceState("object or string", "Title", "?"+id);
-
-              }
-            });
-            
+          $("#panelSave").show()
+          var user = github.getUser();
+          user.repos(function(err, repos) {
+            console.log(repos)
           });
         }else{
           var id=document.URL.split("?")[1]
