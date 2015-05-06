@@ -176,6 +176,10 @@ $(document).ready(function() {
               auth = hello("github").getAuthResponse();
               token = auth.access_token;
               console.log(auth)
+              hello( auth.network ).api( '/me' ).then( function(r){
+                console.log("User data is: ");
+                console.log(r);
+              });
               github = new Github({
                   token: token,
                   auth: "oauth"
