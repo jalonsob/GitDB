@@ -38,6 +38,10 @@ var actualReadingData={
 var companies={};
 //Used platform
 var plataform="";
+//Variables for Github
+var GitUser="";
+var GitRepo="";
+var GitDB="";
 
 $(document).ready(function() {
     //Request of configuration keys
@@ -57,6 +61,7 @@ $(document).ready(function() {
       })
     ).done(function(){
       //In this zone we check what we are using (django or other)
+      //if we are using django or we are using other service we have to move the data on differents forms
         $.ajax({
           type: "GET",
           url: "/db/",
@@ -168,6 +173,7 @@ $(document).ready(function() {
             access = hello("github");
             access.login({response_type: 'code'}).then( function(){
               auth = hello("github").getAuthResponse();
+              console.log(hello("github"))
               token = auth.access_token;
               console.log (token);
               github = new Github({
