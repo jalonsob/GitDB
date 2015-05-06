@@ -355,11 +355,11 @@ $(document).ready(function() {
           user.repos(function(err, repos) {
             $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
             repos.forEach(function(element){
-              $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">'+element.name+'</p>')
+              $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
             })
-            $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input placeholder="'+this.title+'" id="title" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="ChangeValuesGraph('+this.id+')" type="button" class="btn btn-xs btn-default">Redraw</button>')
-            $("#panelSaveConten").append('<button onclick="deleteSettings()" type="button" class="btn btn-xs btn-default">Cancel</button>')
+            $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
+            $("#panelSaveConten").append('<button onclick="Save()" type="button" class="btn btn-xs btn-default">Redraw</button>')
+            $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
           var id=document.URL.split("?")[1]
@@ -392,6 +392,23 @@ $(document).ready(function() {
   })
 
 });
+
+function CancelSave(){
+  $("#panelSaveConten").html(" ")
+  $("#panelSave").slideUp("slow")
+}
+
+function Save(){
+  var repo;
+  $("#listRepo input[type='radio']:checked").each(function() {
+    repo=this.value()
+  });
+  var filename=$("#fileName").val()
+  alert(repo+" "+filename)
+  $("#panelSaveConten").html(" ")
+  $("#panelSave").slideUp("slow")
+
+}
 
 function CancelPanel(){
   $("#panelConten").html("")
