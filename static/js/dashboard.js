@@ -356,9 +356,9 @@ $(document).ready(function() {
           user.repos(function(err, repos) {
             $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
             repos.forEach(function(element){
-              $("#listRepo").append('<p>'+element.name+'<input name="'+element.name+'" value="'+element.name+'" type="checkbox"></p>')
+              $("#listRepo").append('<p><input name="'+element.name+'" value="'+element.name+'" type="checkbox">'+element.name+'</p>')
             })
-            $("#panelSaveConten").append('<p>Save as...</p><p><input placeholder="'+this.title+'" id="title" class="form-control"></div></p>')
+            $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input placeholder="'+this.title+'" id="title" class="form-control"></div></p>')
             $("#panelSaveConten").append('<button onclick="ChangeValuesGraph('+this.id+')" type="button" class="btn btn-xs btn-default">Redraw</button>')
             $("#panelSaveConten").append('<button onclick="deleteSettings()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
