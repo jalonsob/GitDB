@@ -350,13 +350,12 @@ $(document).ready(function() {
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
         })
         if(document.URL.split("?").length!=2){
-          alert("aqui")
           $("#panelSave").slideDown("slow")
           var user = github.getUser();
           user.repos(function(err, repos) {
             $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
             repos.forEach(function(element){
-              $("#listRepo").append('<p><input name="'+element.name+'" value="'+element.name+'" type="checkbox">'+element.name+'</p>')
+              $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">'+element.name+'</p>')
             })
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input placeholder="'+this.title+'" id="title" class="form-control"></div></p>')
             $("#panelSaveConten").append('<button onclick="ChangeValuesGraph('+this.id+')" type="button" class="btn btn-xs btn-default">Redraw</button>')
