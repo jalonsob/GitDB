@@ -172,7 +172,7 @@ $(document).ready(function() {
 
             hello( "github" ).api( '/me' ).then( function(r){
                 console.log("User data is: ");
-                console.log(r);
+                console.log(r.name);
             });
 
             access = hello("github");
