@@ -39,7 +39,6 @@ var companies={};
 //Used platform
 var plataform="";
 //Variables for Github
-var aaa;
 var GitUser="";
 var GitRepo="";
 var GitDB="";
@@ -177,7 +176,7 @@ $(document).ready(function() {
               token = auth.access_token;
               console.log(auth)
               hello( "github" ).api( '/me' ).then( function(r){
-                console.log(r.login)
+                GitUser= r.login;
                });
               github = new Github({
                   token: token,
