@@ -399,12 +399,8 @@ function CancelSave(){
 }
 
 function Save(){
-  var repo;
-  $("#listRepo input[type='radio']:checked").each(function() {
-    repo=$(this).attr('value')
-    console.log("selected")
-  });
-  var filename=$("#fileName").val()
+  var repo= $('input[name=repos]:checked', '#listRepo').val();
+  var filename=$("#fileName").val();
   alert(repo+" "+filename)
   $("#panelSaveConten").html(" ")
   $("#panelSave").slideUp("slow")
