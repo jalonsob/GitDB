@@ -353,7 +353,13 @@ $(document).ready(function() {
           $("#panelSave").show()
           var user = github.getUser();
           user.repos(function(err, repos) {
-            console.log(repos)
+            $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
+            repos.forEach(function(element){
+              $("#listRepo").append('<p>'+element.name+'<input name="'+element.name+'" value="'+element.name+'" type="checkbox"></p>')
+            })
+            $("#panelSaveConten").append('<p>Save as...</p><p><input placeholder="'+this.title+'" id="title" class="form-control"></div></p>')
+            $("#panelSaveConten").append('<button onclick="ChangeValuesGraph('+this.id+')" type="button" class="btn btn-xs btn-default">Redraw</button>')
+            $("#panelSaveConten").append('<button onclick="deleteSettings()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
           var id=document.URL.split("?")[1]
