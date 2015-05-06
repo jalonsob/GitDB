@@ -39,6 +39,7 @@ var companies={};
 //Used platform
 var plataform="";
 //Variables for Github
+var aaa;
 var GitUser="";
 var GitRepo="";
 var GitDB="";
@@ -171,9 +172,7 @@ $(document).ready(function() {
             });
 
             hello( "github" ).api( '/me' ).then( function(r){
-                console.log("User data is: ");
-                console.log(r.login);
-                console.log(r.name)
+                aaa=r;
             });
 
             access = hello("github");
