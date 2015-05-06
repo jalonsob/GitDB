@@ -182,8 +182,8 @@ $(document).ready(function() {
                   token: token,
                   auth: "oauth"
               });
-              myrepo = github.getRepo("jalonsob", "DB");
-
+              var user = github.getUser();
+              console.log(user)
               if(document.URL.split("?").length==2){
                 var file=document.URL.split("?")[1]+".json"
                 myrepo.read('master', file, function(err, data) {
