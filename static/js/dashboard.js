@@ -171,15 +171,14 @@ $(document).ready(function() {
               scope : "publish_files",
             });
 
-            hello( "github" ).api( '/me' ).then( function(r){
-                console.log(r.login)
-            });
-
             access = hello("github");
             access.login({response_type: 'code'}).then( function(){
               auth = hello("github").getAuthResponse();
               token = auth.access_token;
               console.log(auth)
+              hello( "github" ).api( '/me' ).then( function(r){
+                console.log(r.login)
+               });
               github = new Github({
                   token: token,
                   auth: "oauth"
