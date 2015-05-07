@@ -401,7 +401,11 @@ function CancelSave(){
 function Save(){
   var repo= $('input[name=repos]:checked', '#listRepo').val();
   var filename=$("#fileName").val();
-  alert(repo+" "+filename)
+
+  if((repo!=undefined)&&(filename!="")){
+    alert("mola")
+  }
+
   $("#panelSaveConten").html(" ")
   $("#panelSave").slideUp("slow")
 
