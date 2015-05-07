@@ -183,10 +183,10 @@ $(document).ready(function() {
                   auth: "oauth"
               });
               if(document.URL.split("?").length==2){
-                GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]+".json"
+                GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
                 GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
                 myrepo = github.getRepo(document.URL.split("?")[1].split("user=")[1].split("&")[0], GitRepo);
-                myrepo.read('master', GitFile, function(err, data) {
+                myrepo.read('master', GitFile+".json", function(err, data) {
                   data= JSON.parse(data);
                   Object.keys(data.panels).forEach(function(element){
                     PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
