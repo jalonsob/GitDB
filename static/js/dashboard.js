@@ -357,10 +357,9 @@ $(document).ready(function() {
             repos.forEach(function(element){
               $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
             })
-            send=JSON.stringify(info);
-            console.log(send)
+
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="Save('+"'"+send+"'"+')" type="button" class="btn btn-xs btn-default">Save</button>')
+            $("#panelSaveConten").append('<button onclick="Save('+info+')" type="button" class="btn btn-xs btn-default">Save</button>')
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
