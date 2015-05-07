@@ -358,7 +358,7 @@ $(document).ready(function() {
               $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
             })
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="Save('+info+')" type="button" class="btn btn-xs btn-default">Save</button>')
+            $("#panelSaveConten").append('<button onclick="Save('+JSON.stringify(info)+')" type="button" class="btn btn-xs btn-default">Save</button>')
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
@@ -407,7 +407,7 @@ function Save(info){
     GitFile=filename;
     myrepo = github.getRepo(GitUser, GitRepo);
     var url= "?user="+GitUser+"&repo="+GitRepo+"&file="+GitFile+"&"
-    myrepo.write('master', GitFile+".json", JSON.stringify(info),
+    myrepo.write('master', GitFile+".json", info,
      "Updating data", function(err) {
         if(err!=null){
           alert("Save success, please dont forget the url: "+document.URL+url)
