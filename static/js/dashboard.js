@@ -411,13 +411,13 @@ function Save(info){
     var url= "?user="+GitUser+"&repo="+GitRepo+"&file="+GitFile+"&"
     myrepo.write('master', GitFile+".json", JSON.stringify(info),
      "Updating data", function(err) {
-        if(err!=null){
+        if(err==null){
           alert("Save success, please dont forget the url: "+document.URL+url)
         }else{
           alert(err)
         }
      });
-    window.history.replaceState("object or string", "Title", id);
+    window.history.replaceState("object or string", "Title", url);
 
   }else{
     alert("Please, select a repository and write a name for your file.")
