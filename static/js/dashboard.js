@@ -359,7 +359,7 @@ $(document).ready(function() {
             })
 
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="Save('+info+')" type="button" class="btn btn-xs btn-default">Save</button>')
+            $("#panelSaveConten").append('<button onclick="Save('+info.toString()+')" type="button" class="btn btn-xs btn-default">Save</button>')
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
