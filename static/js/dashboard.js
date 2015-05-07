@@ -343,12 +343,7 @@ $(document).ready(function() {
       }
     }else{
       if(numPanel>0){
-        var info={};
-        info.panels={}
-        info.name=$("#titleApp").val()
-        panels.forEach(function(element){
-          info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
-        })
+        
         if(document.URL.split("?").length!=2){
           $("#panelSave").slideDown("slow")
           var user = github.getUser();
@@ -359,7 +354,7 @@ $(document).ready(function() {
             })
 
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="Save('+info.toString()+')" type="button" class="btn btn-xs btn-default">Save</button>')
+            $("#panelSaveConten").append('<button onclick="Save()" type="button" class="btn btn-xs btn-default">Save</button>')
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
@@ -404,11 +399,17 @@ function Save(info){
   var filename=$("#fileName").val();
 
   if((repo!=undefined)&&(filename!="")){
+    var info={};
+        info.panels={}
+        info.name=$("#titleApp").val()
+        panels.forEach(function(element){
+          info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
+    })
     GitRepo=repo;
     GitFile=filename;
     myrepo = github.getRepo(GitUser, GitRepo);
     var url= "?user="+GitUser+"&repo="+GitRepo+"&file="+GitFile+"&"
-    myrepo.write('master', GitFile+".json", info,
+    myrepo.write('master', GitFile+".json", JSON.stringify(info),
      "Updating data", function(err) {
         if(err!=null){
           alert("Save success, please dont forget the url: "+document.URL+url)
