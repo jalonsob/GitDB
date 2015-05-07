@@ -41,7 +41,7 @@ var plataform="";
 //Variables for Github
 var GitUser="";
 var GitRepo="";
-var GitDB="";
+var GitFile="";
 
 $(document).ready(function() {
     //Request of configuration keys
@@ -358,7 +358,7 @@ $(document).ready(function() {
               $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
             })
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="Save()" type="button" class="btn btn-xs btn-default">Save</button>')
+            $("#panelSaveConten").append('<button onclick="Save('+info+')" type="button" class="btn btn-xs btn-default">Save</button>')
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
@@ -398,12 +398,27 @@ function CancelSave(){
   $("#panelSave").slideUp("slow")
 }
 
-function Save(){
+function Save(info){
   var repo= $('input[name=repos]:checked', '#listRepo').val();
   var filename=$("#fileName").val();
 
   if((repo!=undefined)&&(filename!="")){
-    alert("mola")
+    GitRepo=repo;
+    GitFile=filename;
+    myrepo = github.getRepo(GitUser, GitRepo);
+    var url= "?user="+GitUser+"&repo="+GitRepo+"&file="+GitFile+"&"
+    myrepo.write('master', GitFile+".json", JSON.stringify(info),
+     "Updating data", function(err) {
+        if(err!=null){
+          alert("Save success, please dont forget the url: "+document.URL+url)
+        }else{
+          alert(err)
+        }
+     });
+    window.history.replaceState("object or string", "Title", id);
+
+  }else{
+    alert("Please, select a repository and write a name for your file.")
   }
 
   $("#panelSaveConten").html(" ")
