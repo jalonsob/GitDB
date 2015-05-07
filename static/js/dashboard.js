@@ -358,6 +358,7 @@ $(document).ready(function() {
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
+          alert("aqui")
           var info={};
           info.panels={}
           info.name=$("#titleApp").val()
