@@ -357,8 +357,9 @@ $(document).ready(function() {
             repos.forEach(function(element){
               $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
             })
-            info=JSON.stringify(info);
-            info=info.replace('"',"'");
+            send=JSON.stringify(info);
+            console.log(typeof(send))
+            send=send.replace('"',"'");
             $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
             $("#panelSaveConten").append('<button onclick="Save('+JSON.stringify(info)+')" type="button" class="btn btn-xs btn-default">Save</button>')
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
