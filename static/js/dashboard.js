@@ -183,7 +183,9 @@ $(document).ready(function() {
                   auth: "oauth"
               });
               if(document.URL.split("?").length==2){
-                var file=document.URL.split("?")[1]+".json"
+                var file=document.URL.split("?")[1].split("file=")[1].split("&")[0]+".json"
+                GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
+                myrepo = github.getRepo(document.URL.split("?")[1].split("user=")[1].split("&")[0], GitRepo);
                 myrepo.read('master', file, function(err, data) {
                   data= JSON.parse(data);
                   Object.keys(data.panels).forEach(function(element){
