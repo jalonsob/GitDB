@@ -371,7 +371,7 @@ $(document).ready(function() {
               if(err==null){
                 alert("Save success")
               }else{
-                alert(err)
+                alert("You have no permissions for this dashboard")
               }
           });
         }
