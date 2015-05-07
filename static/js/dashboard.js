@@ -358,14 +358,18 @@ $(document).ready(function() {
             $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
           });
         }else{
-          var id=document.URL.split("?")[1]
-          myrepo.write('master', id+".json", JSON.stringify(info),
-              "Updating data", function(err) {
-              if(err!=null){
-                alert("Error: "+err);
+          var info={};
+          info.panels={}
+          info.name=$("#titleApp").val()
+          panels.forEach(function(element){
+            info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
+          })
+          myrepo.write('master', GitFile+".json", JSON.stringify(info),
+           "Updating data", function(err) {
+              if(err==null){
+                alert("Save success")
               }else{
-                alert("Saved")
-
+                alert(err)
               }
           });
         }
