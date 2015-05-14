@@ -330,46 +330,49 @@ $(document).ready(function() {
           scope : "publish_files",
         });
 
-        auth = hello("github").getAuthResponse();
-        token = auth.access_token;
+        access = hello("github");
+        access.login({response_type: 'code'}).then( function(){
+          auth = hello("github").getAuthResponse();
+          token = auth.access_token;
+          console.log(auth)
+          hello( "github" ).api( '/me' ).then( function(r){
+            GitUser= r.login;
+           });
+          github = new Github({
+              token: token,
+              auth: "oauth"
+          });
         
-        hello( "github" ).api( '/me' ).then( function(r){
-          GitUser= r.login;
-        });
-        github = new Github({
-            token: token,
-            auth: "oauth"
-        });
-        
-        if(document.URL.split("?").length!=2){
-          $("#panelSave").slideDown("slow")
-          var user = github.getUser();
-          user.repos(function(err, repos) {
-            $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
-            repos.forEach(function(element){
-              $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
-            })
+          if(document.URL.split("?").length!=2){
+            $("#panelSave").slideDown("slow")
+            var user = github.getUser();
+            user.repos(function(err, repos) {
+              $("#panelSaveConten").append('<div id="listRepo" style="height: 200px; overflow-y: scroll;"></div>')
+              repos.forEach(function(element){
+                $("#listRepo").append('<p><input name="repos" value="'+element.name+'" type="radio">   '+element.name+'</p>')
+              })
 
-            $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
-            $("#panelSaveConten").append('<button onclick="Save()" type="button" class="btn btn-xs btn-default">Save</button>')
-            $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
-          });
-        }else{
-          var info={};
-          info.panels={}
-          info.name=$("#titleApp").val()
-          panels.forEach(function(element){
-            info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
-          })
-          myrepo.write('master', GitFile+".json", JSON.stringify(info),
-           "Updating data", function(err) {
-              if(err==null){
-                alert("Save success")
-              }else{
-                alert("You have no permissions for this dashboard")
-              }
-          });
-        }
+              $("#panelSaveConten").append('<p>Save as...</p><p></p><p><input id="fileName" class="form-control"></div></p>')
+              $("#panelSaveConten").append('<button onclick="Save()" type="button" class="btn btn-xs btn-default">Save</button>')
+              $("#panelSaveConten").append('<button onclick="CancelSave()" type="button" class="btn btn-xs btn-default">Cancel</button>')
+            });
+          }else{
+            var info={};
+            info.panels={}
+            info.name=$("#titleApp").val()
+            panels.forEach(function(element){
+              info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
+            })
+            myrepo.write('master', GitFile+".json", JSON.stringify(info),
+             "Updating data", function(err) {
+                if(err==null){
+                  alert("Save success")
+                }else{
+                  alert("You have no permissions for this dashboard")
+                }
+            });
+          }
+        });
       }
     }
   })
