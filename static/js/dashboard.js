@@ -186,7 +186,7 @@ $(document).ready(function() {
               GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
               RepoUser =document.URL.split("?")[1].split("user=")[1].split("&")[0]
               alert("lo saco de : "+"https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?jsoncallback=?")
-              $.getJSON("https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?callback=?").success(function(data){
+              $.getJSON("https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?callback=?",function(data){
                 alert("yehe!")
                 data= JSON.parse(data);
                 Object.keys(data.panels).forEach(function(element){
