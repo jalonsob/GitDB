@@ -363,6 +363,7 @@ $(document).ready(function() {
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
+            myrepo = github.getRepo(RepoUser, GitRepo);
             myrepo.write('master', GitFile+".json", JSON.stringify(info),
              "Updating data", function(err) {
                 if(err==null){
