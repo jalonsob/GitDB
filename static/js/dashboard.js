@@ -161,25 +161,6 @@ $(document).ready(function() {
           },
           error: function () {
             plataform="github"
-            /*
-            hello.init({
-              github : "936bbeb53192a030958d"
-            },{
-              redirect_uri : 'redirect.html',
-              oauth_proxy : "https://auth-server.herokuapp.com/proxy",
-              scope : "publish_files",
-            });*/
-              /*
-              auth = hello("github").getAuthResponse();
-              token = auth.access_token;
-              console.log(auth)
-              hello( "github" ).api( '/me' ).then( function(r){
-                GitUser= r.login;
-              });
-              github = new Github({
-                  token: token,
-                  auth: "oauth"
-              });*/
             if(document.URL.split("?").length==2){
               GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
               GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
@@ -340,6 +321,25 @@ $(document).ready(function() {
       }
     }else{
       if(numPanel>0){
+        
+        hello.init({
+          github : "936bbeb53192a030958d"
+        },{
+          redirect_uri : 'redirect.html',
+          oauth_proxy : "https://auth-server.herokuapp.com/proxy",
+          scope : "publish_files",
+        });
+
+        auth = hello("github").getAuthResponse();
+        token = auth.access_token;
+        
+        hello( "github" ).api( '/me' ).then( function(r){
+          GitUser= r.login;
+        });
+        github = new Github({
+            token: token,
+            auth: "oauth"
+        });
         
         if(document.URL.split("?").length!=2){
           $("#panelSave").slideDown("slow")
