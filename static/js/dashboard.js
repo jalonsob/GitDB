@@ -185,8 +185,6 @@ $(document).ready(function() {
               GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
               RepoUser =document.URL.split("?")[1].split("user=")[1].split("&")[0]
               $.get("https://cdn.rawgit.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".json").success(function(data){
-                console.log(typeof(data))
-                data= JSON.parse(data);
                 Object.keys(data.panels).forEach(function(element){
                   PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
                   var id=element.split("panel")[1]
