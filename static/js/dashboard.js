@@ -161,111 +161,108 @@ $(document).ready(function() {
           },
           error: function () {
             plataform="github"
-
+            alert("todo is ok")
+            /*
             hello.init({
               github : "936bbeb53192a030958d"
             },{
               redirect_uri : 'redirect.html',
               oauth_proxy : "https://auth-server.herokuapp.com/proxy",
               scope : "publish_files",
-            });
-
-            access = hello("github");
-            access.login({response_type: 'code'}).then( function(){
+            });*/
+              /*
               auth = hello("github").getAuthResponse();
               token = auth.access_token;
               console.log(auth)
               hello( "github" ).api( '/me' ).then( function(r){
                 GitUser= r.login;
-               });
+              });
               github = new Github({
                   token: token,
                   auth: "oauth"
+              });*/
+            if(document.URL.split("?").length==2){
+              alert("estoy aqui")
+              GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
+              GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
+              RepoUser =document.URL.split("?")[1].split("user=")[1].split("&")[0]
+              $.getJSON("https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?jsoncallback=?").success(function(data){
+                alert("yehe!")
+                data= JSON.parse(data);
+                Object.keys(data.panels).forEach(function(element){
+                  PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
+                  var id=element.split("panel")[1]
+                  dashConfiguration.push(id)
+                  var panel= GetPanel(id)
+
+                  //With the panel created we pass to create the object of the widgets to draw them when we want to see each panel.
+                  data.panels[element].widgets.forEach(function(widgetSaved){
+                    if(numWidget<widgetSaved.id){
+                      numWidget=widgetSaved.id
+                    }
+                    if(widgetSaved.type=="HighInfo"){
+                      var widget= new HighInfo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="HighDemo"){
+                      var widget= new HighDemo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="HighTime"){
+                      var widget= new HighTime(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.from,widgetSaved.to,widgetSaved.size,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="VideoWidget"){
+                      var widget= new VideoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.url,widgetSaved.content,widgetSaved.width,widgetSaved.height,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="HtmlInfoWidget"){
+                      var widget= new HtmlInfoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }
+                  })
+                })
+                $("#panel"+1).slideDown("slow");
+                //makepanel is a function that creates a panel with the configuration saved
+                makePanel(1)
+              
               });
-              if(document.URL.split("?").length==2){
-                GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
-                GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
-                myrepo = github.getRepo(document.URL.split("?")[1].split("user=")[1].split("&")[0], GitRepo);
-                myrepo.read('master', GitFile+".json", function(err, data) {
-                  data= JSON.parse(data);
-                  Object.keys(data.panels).forEach(function(element){
-                    PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
-                    var id=element.split("panel")[1]
-                    dashConfiguration.push(id)
-                    var panel= GetPanel(id)
+            }else{
+              //In other case we request the default configuration file
+              $.getJSON("templates/json/0.json").success(function(data){
+                $("#titleApp").val(data.name.toString())
+                Object.keys(data.panels).forEach(function(element){
+                  PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
+                  var id=element.split("panel")[1]
+                  dashConfiguration.push(id)
+                  var panel= GetPanel(id)
 
-                    //With the panel created we pass to create the object of the widgets to draw them when we want to see each panel.
-                    data.panels[element].widgets.forEach(function(widgetSaved){
-                      if(numWidget<widgetSaved.id){
-                        numWidget=widgetSaved.id
-                      }
-                      if(widgetSaved.type=="HighInfo"){
-                        var widget= new HighInfo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="HighDemo"){
-                        var widget= new HighDemo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="HighTime"){
-                        var widget= new HighTime(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.from,widgetSaved.to,widgetSaved.size,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="VideoWidget"){
-                        var widget= new VideoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.url,widgetSaved.content,widgetSaved.width,widgetSaved.height,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="HtmlInfoWidget"){
-                        var widget= new HtmlInfoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }
-                    })
+                  //With the panel created we pass to create the object of the widgets to draw them when we want to see each panel.
+                  data.panels[element].widgets.forEach(function(widgetSaved){
+                    if(numWidget<widgetSaved.id){
+                      numWidget=widgetSaved.id
+                    }
+                    if(widgetSaved.type=="HighInfo"){
+                      var widget= new HighInfo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="HighDemo"){
+                      var widget= new HighDemo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="HighTime"){
+                      var widget= new HighTime(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.from,widgetSaved.to,widgetSaved.size,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="VideoWidget"){
+                      var widget= new VideoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.url,widgetSaved.content,widgetSaved.width,widgetSaved.height,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }else if(widgetSaved.type=="HtmlInfoWidget"){
+                      var widget= new HtmlInfoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.series,widgetSaved.x,widgetSaved.y)
+                      panel.pushElement(widget)
+                    }
                   })
-                  $("#panel"+1).slideDown("slow");
-                  //makepanel is a function that creates a panel with the configuration saved
-                  makePanel(1)
-                
-                });
-              }else{
-                //In other case we request the default configuration file
-                $.getJSON("templates/json/0.json").success(function(data){
-                  $("#titleApp").val(data.name.toString())
-                  Object.keys(data.panels).forEach(function(element){
-                    PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
-                    var id=element.split("panel")[1]
-                    dashConfiguration.push(id)
-                    var panel= GetPanel(id)
-
-                    //With the panel created we pass to create the object of the widgets to draw them when we want to see each panel.
-                    data.panels[element].widgets.forEach(function(widgetSaved){
-                      if(numWidget<widgetSaved.id){
-                        numWidget=widgetSaved.id
-                      }
-                      if(widgetSaved.type=="HighInfo"){
-                        var widget= new HighInfo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="HighDemo"){
-                        var widget= new HighDemo(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="HighTime"){
-                        var widget= new HighTime(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.title,widgetSaved.series,widgetSaved.from,widgetSaved.to,widgetSaved.size,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="VideoWidget"){
-                        var widget= new VideoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.url,widgetSaved.content,widgetSaved.width,widgetSaved.height,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }else if(widgetSaved.type=="HtmlInfoWidget"){
-                        var widget= new HtmlInfoWidget(widgetSaved.id,id,widgetSaved.color,widgetSaved.typeData,widgetSaved.readingData,widgetSaved.jsons,widgetSaved.series,widgetSaved.x,widgetSaved.y)
-                        panel.pushElement(widget)
-                      }
-                    })
-                  })
-                  $("#panel"+1).slideDown("slow");
-                  //makepanel is a function that creates a panel with the configuration saved
-                  makePanel(1)
-                
-                });
-                
-              }
-
-            }, function( e ){
-              alert('Signin error: ' + e.error.message);
-            });
+                })
+                $("#panel"+1).slideDown("slow");
+                //makepanel is a function that creates a panel with the configuration saved
+                makePanel(1)
+              
+              });
+              
+            }
           }
         }); 
       
