@@ -182,10 +182,10 @@ $(document).ready(function() {
                   auth: "oauth"
               });*/
             if(document.URL.split("?").length==2){
-              alert("estoy aqui")
               GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
               GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
               RepoUser =document.URL.split("?")[1].split("user=")[1].split("&")[0]
+              alert("lo saco de : "+"https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?jsoncallback=?")
               $.getJSON("https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?jsoncallback=?").success(function(data){
                 alert("yehe!")
                 data= JSON.parse(data);
