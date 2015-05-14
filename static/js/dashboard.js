@@ -415,7 +415,7 @@ function Save(info){
     GitFile=filename;
     myrepo = github.getRepo(GitUser, GitRepo);
     var url= "?user="+GitUser+"&repo="+GitRepo+"&file="+GitFile+"&"
-    myrepo.write('master', GitFile+".jsonp", JSON.stringify(info),
+    myrepo.write('master', GitFile+".jsonp", "("+JSON.stringify(info)+")",
      "Updating data", function(err) {
         if(err==null){
           alert("Save success, please dont forget the url: "+document.URL+url)
