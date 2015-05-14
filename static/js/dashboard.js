@@ -185,9 +185,7 @@ $(document).ready(function() {
               GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
               GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
               RepoUser =document.URL.split("?")[1].split("user=")[1].split("&")[0]
-              alert("lo saco de : "+"https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?jsoncallback=?")
-              $.getJSON("https://raw.githubusercontent.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".jsonp?callback=?",function(data){
-                alert("yehe!")
+              $.get("https://cdn.rawgit.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".json").success(function(data){
                 data= JSON.parse(data);
                 Object.keys(data.panels).forEach(function(element){
                   PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
@@ -222,7 +220,9 @@ $(document).ready(function() {
                 //makepanel is a function that creates a panel with the configuration saved
                 makePanel(1)
               
-              });
+              }).fail(function(error){
+                 alert("We cant download your configurable dashboard")
+              });;
             }else{
               //In other case we request the default configuration file
               $.getJSON("templates/json/0.json").success(function(data){
