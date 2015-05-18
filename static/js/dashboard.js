@@ -165,7 +165,7 @@ $(document).ready(function() {
               GitFile=document.URL.split("?")[1].split("file=")[1].split("&")[0]
               GitRepo=document.URL.split("?")[1].split("repo=")[1].split("&")[0]
               RepoUser =document.URL.split("?")[1].split("user=")[1].split("&")[0]
-              $.get("https://cdn.rawgit.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".json").success(function(data){
+              $.get("https://rawgit.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".json").success(function(data){
                 Object.keys(data.panels).forEach(function(element){
                   PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
                   var id=element.split("panel")[1]
@@ -363,7 +363,6 @@ $(document).ready(function() {
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
-            alert(RepoUser)
             myrepo = github.getRepo(RepoUser, GitRepo);
             myrepo.write('master', GitFile+".json", JSON.stringify(info),
              "Updating data", function(err) {
