@@ -168,6 +168,7 @@ $(document).ready(function() {
               $.get("https://rawgit.com/"+RepoUser+"/"+GitRepo+"/master/"+GitFile+".json").success(function(data){
                 Object.keys(data.panels).forEach(function(element){
                   PanelCreation(data.panels[element].panel.color,data.panels[element].panel.name);
+                  $("#titleApp").val(data.name.toString())
                   var id=data.panels[element].panel.id
                   dashConfiguration.push(id)
                   var panel= GetPanel(id)
