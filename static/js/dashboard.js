@@ -112,7 +112,6 @@ $(document).ready(function() {
                 })
                 actualPanel=1;
                 var panel= GetPanel(1)
-                console.log(panel.reading)
                 actualReadingData=panel.reading
                 $("#panel"+1).slideDown("slow");
                 //makepanel is a function that creates a panel with the configuration saved
@@ -197,6 +196,9 @@ $(document).ready(function() {
                   })
                 })
                 $("#panel"+1).slideDown("slow");
+                actualPanel=1;
+                var panel= GetPanel(1)
+                actualReadingData=panel.reading
                 //makepanel is a function that creates a panel with the configuration saved
                 makePanel(1)
               
@@ -360,13 +362,10 @@ $(document).ready(function() {
             var info={};
             info.panels={}
             info.name=$("#titleApp").val()
-            alert("antes de")
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
-            alert("RepoUser")
             myrepo = github.getRepo(RepoUser, GitRepo);
-            alert("voy a guardar")
 
             myrepo.write('master', GitFile+".json", JSON.stringify(info),
              "Updating data", function(err) {
@@ -403,7 +402,7 @@ function CancelSave(){
   $("#panelSave").slideUp("slow")
 }
 
-function Save(info){
+function Save(){
   var repo= $('input[name=repos]:checked', '#listRepo').val();
   var filename=$("#fileName").val();
 
@@ -413,7 +412,7 @@ function Save(info){
         info.name=$("#titleApp").val()
         panels.forEach(function(element){
           info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
-    })
+        })
     GitRepo=repo;
     GitFile=filename;
     myrepo = github.getRepo(GitUser, GitRepo);
