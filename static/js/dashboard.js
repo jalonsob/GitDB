@@ -360,6 +360,8 @@ $(document).ready(function() {
             var info={};
             alert("entro en guardado ya realizado")
             info.panels={}
+            alert("Antes name")
+
             info.name=$("#titleApp").val()
             alert("Antes de panels")
 
