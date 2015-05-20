@@ -39,6 +39,7 @@ var companies={};
 //Used platform
 var plataform="";
 //Variables for Github
+var RepoUser="";
 var GitUser="";
 var GitRepo="";
 var GitFile="";
@@ -363,6 +364,7 @@ $(document).ready(function() {
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
+            console.log()
             myrepo = github.getRepo(RepoUser, GitRepo);
             alert("voy a guardar")
 
