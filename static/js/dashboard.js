@@ -364,7 +364,7 @@ $(document).ready(function() {
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
-            console.log()
+            console.log("RepoUser")
             myrepo = github.getRepo(RepoUser, GitRepo);
             alert("voy a guardar")
 
