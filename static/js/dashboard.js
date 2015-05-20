@@ -361,10 +361,12 @@ $(document).ready(function() {
             alert("entro en guardado ya realizado")
             info.panels={}
             info.name=$("#titleApp").val()
+            alert("Antes de panels")
+
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
-            console.log("RepoUser")
+            alert("RepoUser")
             myrepo = github.getRepo(RepoUser, GitRepo);
             alert("voy a guardar")
 
