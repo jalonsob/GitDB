@@ -358,19 +358,13 @@ $(document).ready(function() {
             });
           }else{
             var info={};
-            alert("entro en guardado ya realizado")
             info.panels={}
-            alert("Antes name")
-
             info.name=$("#titleApp").val()
-            alert("Antes de panels")
 
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
-            alert("RepoUser")
             myrepo = github.getRepo(RepoUser, GitRepo);
-            alert("voy a guardar")
 
             myrepo.write('master', GitFile+".json", JSON.stringify(info),
              "Updating data", function(err) {
