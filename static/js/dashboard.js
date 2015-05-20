@@ -334,7 +334,6 @@ $(document).ready(function() {
         access.login({response_type: 'code'}).then( function(){
           auth = hello("github").getAuthResponse();
           token = auth.access_token;
-          console.log(auth)
           hello( "github" ).api( '/me' ).then( function(r){
             GitUser= r.login;
            });
@@ -358,12 +357,15 @@ $(document).ready(function() {
             });
           }else{
             var info={};
+            alert("entro en guardado ya realizado")
             info.panels={}
             info.name=$("#titleApp").val()
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
             myrepo = github.getRepo(RepoUser, GitRepo);
+            alert("voy a guardar")
+
             myrepo.write('master', GitFile+".json", JSON.stringify(info),
              "Updating data", function(err) {
                 if(err==null){
