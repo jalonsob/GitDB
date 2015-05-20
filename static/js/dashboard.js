@@ -360,7 +360,7 @@ $(document).ready(function() {
             var info={};
             info.panels={}
             info.name=$("#titleApp").val()
-
+            alert("antes de panels")
             panels.forEach(function(element){
               info.panels[(Object.keys(element.flatten())[0])]=(element.flatten()[(Object.keys(element.flatten())[0])])
             })
